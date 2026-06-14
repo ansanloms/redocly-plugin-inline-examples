@@ -1,0 +1,1 @@
+# redocly-plugin-inline-examples
