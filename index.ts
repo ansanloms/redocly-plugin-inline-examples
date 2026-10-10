@@ -1,4 +1,4 @@
-import type { Oas3Preprocessor } from "./deps/npm/openapi-core.ts";
+import type { Oas3Preprocessor } from "@redocly/openapi-core";
 
 import { InlineExamples } from "./preprocessors/inline-examples.ts";
 
