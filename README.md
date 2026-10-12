@@ -22,29 +22,21 @@ oas3 の `Operation` の `requestBody` / `responses` を走査し、`examples` �
 npm install -D github:ansanloms/redocly-plugin-inline-examples#0.1.0
 ```
 
-`redocly.yaml` からはローカルのラッパーを置いて参照する。
-
-ラッパー (例 `redocly/plugins/inline-examples.mjs`):
-
-```js
-export { default } from "@ansanloms/redocly-plugin-inline-examples";
-```
-
-TypeScript でラッパーを書く場合は、型の解決に `@redocly/openapi-core` が必要なため devDependencies に入れる。本パッケージは `@redocly/openapi-core` を optional な peerDependency として宣言している。
+`redocly.yaml` の `plugins:` にパッケージ名を書いて参照する。Redocly CLI の plugin ローダは、設定ファイルからの相対パスにファイルが無ければパッケージ名として node_modules から解決する。
 
 `redocly.yaml`:
 
 ```yaml
 plugins:
-  - "./redocly/plugins/inline-examples.mjs"
+  - "@ansanloms/redocly-plugin-inline-examples"
 preprocessors:
   ansanloms/inline-examples: on
 ```
 
 > [!NOTE]
-> Redocly CLI 2.x の plugin ローダは ESM の動的 import で読み込むため、ラッパーは
-> ESM (`.mjs`、または `"type": "module"` 配下の `.js`) にする。
-> Redocly CLI 2.x は Node 20.19 以上または 22.12 以上が必要。
+> Redocly CLI 2.57.0 で動作を確認している。Redocly CLI 2.x は Node 20.19 以上または 22.12 以上が必要。
+
+本パッケージは `@redocly/openapi-core` を optional な peerDependency として宣言している。TypeScript から型を参照する場合は `@redocly/openapi-core` を devDependencies に入れる。
 
 ## 開発
 
