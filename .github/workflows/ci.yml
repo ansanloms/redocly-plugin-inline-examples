@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run check
+      - run: npm test
+      - run: npm run compile
+      - name: Smoke test with packed tarball
+        run: |
+          tgz=$(npm pack --pack-destination "$RUNNER_TEMP" | tail -n 1)
+          mkdir -p "$RUNNER_TEMP/consumer"
+          cd "$RUNNER_TEMP/consumer"
+          npm init -y > /dev/null
+          npm install --no-save "$RUNNER_TEMP/$tgz"
+          node --input-type=module -e '
+            const mod = await import("@ansanloms/redocly-plugin-inline-examples");
+            const plugin = mod.default();
+            if (plugin.id !== "ansanloms") throw new Error("unexpected id: " + plugin.id);
+            if (typeof plugin.preprocessors.oas3["inline-examples"] !== "function") throw new Error("preprocessor missing");
+          '
+      - name: Verify working tree is clean
+        run: |
+          git status --porcelain
+          test -z "$(git status --porcelain)"
