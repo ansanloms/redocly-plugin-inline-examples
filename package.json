@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@redocly/openapi-core": "2.62.1",
-    "@types/node": "24.19.2",
+    "@types/node": "26.6.5",
     "oxfmt": "0.72.0",
     "oxlint": "1.87.0",
     "typescript": "7.0.2"
