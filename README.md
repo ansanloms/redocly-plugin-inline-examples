@@ -51,7 +51,7 @@ npm run compile     # dist/ を消してから生成
 
 `dist/` は tsc の出力でコミットする。CI が鮮度を検査する。git 依存はインストール時に
 `build` / `prepare` 等のスクリプトが走るため、それらは置かず、コミット済みの `dist/` を配布する。
-Node 24 は開発環境の要件で、配布物は素の ESM。`typescript` の更新で `dist/` が変わった場合は、
+Node 26 は開発環境の要件で、配布物は素の ESM。`typescript` の更新で `dist/` が変わった場合は、
 PR ブランチで `npm run compile` してコミットする。
 依存は正確な版で固定し (`.npmrc` の `save-exact`)、更新は Dependabot の PR で取り込む。
 `ignore-scripts` で install 時に依存の lifecycle script を実行しない (`npm run` の本体 script には影響しない)。`min-release-age` で公開から 7 日未満の版を新規に解決しない (lockfile に固定済みの版には効かない)。

@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "compile": "rm -rf dist && tsc -p tsconfig.build.json",
+    "compile": "rm -rf dist && tsc",
     "check": "tsc --noEmit",
     "test": "node --test '*.test.ts'",
     "lint": "oxlint && oxfmt --check",
